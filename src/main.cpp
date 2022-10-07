@@ -18,9 +18,9 @@ void setup() {
   pedals.setThrottleBits("10bit", "15bit");
   pedals.setThrottleLoadcell(THROTTLE_SCK,THROTTLE_DATA);
 
-  pedals.setBrakeOn(true);
-  pedals.setBrakeBits("20bit", "15bit");
-  pedals.setBrakeLoadcell(BRAKE_SCK,BRAKE_DATA);
+  pedals.setBrakeOn(false);
+  // pedals.setBrakeBits("20bit", "15bit");
+  // pedals.setBrakeLoadcell(BRAKE_SCK,BRAKE_DATA);
 
   pedals.setClutchOn(false);
   // pedals.setClutchBits("10bit", "15bit");

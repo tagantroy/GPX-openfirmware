@@ -170,16 +170,6 @@ class Pedals {
       _throttle.ConfigLoadCell(DOUT, CLK);
     }
 
-    void Pedals::setThrottleADSChannel(int channel) {
-      _throttle_pedalType = "ADS";
-      _throttle.ConfigADS(_ads1015, channel);
-    }
-
-    void Pedals::setThrottleAnalogPin(int analogInput) {
-      _throttle_pedalType = "Analog";
-      _throttle_analog_input = analogInput;
-      _throttle.ConfigAnalog(analogInput);
-    }
 
     String Pedals::getThrottleType() {
       return _throttle_pedalType;
@@ -200,17 +190,6 @@ class Pedals {
       _brake.ConfigLoadCell(DOUT, CLK);
     }
 
-    void Pedals::setBrakeADSChannel(int channel) {
-      _brake_pedalType = "ADS";
-      _brake.ConfigADS(_ads1015, channel);
-    }
-
-    void Pedals::setBrakeAnalogPin(int analogInput) {
-      _brake_pedalType = "Analog";
-      _brake_analog_input = analogInput;
-      _brake.ConfigAnalog(analogInput);
-    }
-
     String Pedals::getBrakeType() {
       return _brake_pedalType;
     }
@@ -228,17 +207,6 @@ class Pedals {
     void Pedals::setClutchLoadcell(int DOUT, int CLK) {
       _clutch_pedalType = "Loadcell";
       _clutch.ConfigLoadCell(DOUT, CLK);
-    }
-
-    void Pedals::setClutchADSChannel(int channel) {
-      _clutch_pedalType = "ADS";
-      _clutch.ConfigADS(_ads1015, channel);
-    }
-
-    void Pedals::setClutchAnalogPin(int analogInput) {
-      _clutch_pedalType = "Analog";
-      _clutch_analog_input = analogInput;
-      _clutch.ConfigAnalog(analogInput);
     }
 
     String Pedals::getClutchType() {
