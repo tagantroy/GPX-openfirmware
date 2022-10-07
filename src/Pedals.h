@@ -24,8 +24,6 @@
 String cm = ",";
 String dash = "-";
 
-ADS1115 _ads1015;
-
 Joystick_ _joystick(
   JOYSTICK_DEFAULT_REPORT_ID,
   JOYSTICK_TYPE_GAMEPAD,
@@ -48,11 +46,6 @@ class Pedals {
     void Pedals::setup() {
       Pedals::loadEEPROMSettings();
       _joystick.begin();
-
-      _ads1015.begin();
-      _ads1015.setGain(0);      // 6.144 volt
-      _ads1015.setDataRate(7);  // fast
-      _ads1015.setMode(0);      // continuous mode
 
       _joystick.setRxAxis(0);
       _joystick.setRxAxisRange(0, (_throttle_hid_bit - 1));

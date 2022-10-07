@@ -7,7 +7,6 @@
 
 #include <HX711.h>
 
-#include <ADS1X15.h>
 
 // init util library
 UtilLib utilLib;
@@ -43,13 +42,6 @@ class Pedal
       _signal = 1;
     }
 
-    void Pedal::ConfigADS (ADS1115 _ads1015, int channel)
-    {
-      this->_ads1015 = _ads1015;
-      this->_channel = channel;
-      _signal = 2;
-    }
-
     int Pedal::getAfterHID() {
       return _afterHID;
     }
@@ -60,22 +52,12 @@ class Pedal
 
     void Pedal::readValues() {
       long rawValue = 0;
-      if (_signal == 0) {
-        rawValue = analogRead(_analogInput);
-        if (rawValue < 0) rawValue = 0;
-      }
-      if (_signal == 1) {
-        rawValue = _loadCell.get_value(1);
-        if (rawValue > _loadcell_max_val) {
+      rawValue = _loadCell.get_value(1);
+      if (rawValue > _loadcell_max_val) {
 //            rawValue = 0;
-          rawValue = (_loadcell_max_val - 1);
-        }
-        if (rawValue < 0) rawValue = 0;
+        rawValue = (_loadcell_max_val - 1);
       }
-      if (_signal == 2) {
-        rawValue = _ads1015.readADC(_channel);
-        if (rawValue < 0) rawValue = 0;
-      }
+      if (rawValue < 0) rawValue = 0;
 
       Pedal::updatePedal(rawValue);
     }
@@ -172,7 +154,6 @@ class Pedal
     long _loadcell_max_val = 16777215; //24bit
     int _loadcell_sensitivity = 64; //Medium = 64, High = 128;
 
-    ADS1115 _ads1015;
     int _channel = 0;
     int _analogInput = A0;
     int _inverted = 0; //0 = false / 1 - true
