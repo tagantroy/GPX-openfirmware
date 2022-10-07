@@ -4,27 +4,27 @@
 
 Pedals pedals;
 
+int THROTTLE_SCK = 9;
+int THROTTLE_DATA = 8;
+
+int BRAKE_SCK = 7;
+int BRAKE_DATA = 6;
+
 // the setup routine runs once when you press reset:
 void setup() {
   // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
   pedals.setThrottleOn(true);
   pedals.setThrottleBits("10bit", "15bit");
-  pedals.setThrottleAnalogPin(A0);
-//   pedals.setThrottleADSChannel(1);
-//   pedals.setThrottleLoadcell(6,5);
+  pedals.setThrottleLoadcell(THROTTLE_SCK,THROTTLE_DATA);
 
   pedals.setBrakeOn(true);
   pedals.setBrakeBits("20bit", "15bit");
-//  pedals.setBrakeAnalogPin(A3);
-//   pedals.setBrakeADSChannel(1);
-   pedals.setBrakeLoadcell(7,5);
+  pedals.setBrakeLoadcell(BRAKE_SCK,BRAKE_DATA);
 
-  pedals.setClutchOn(true);
-  pedals.setClutchBits("10bit", "15bit");
-  pedals.setClutchAnalogPin(A1);
-//   pedals.setClutchADSChannel(1);
-//   pedals.setClutchLoadcell(8,5);
+  pedals.setClutchOn(false);
+  // pedals.setClutchBits("10bit", "15bit");
+  // pedals.setClutchLoadcell(8,5);
 
   pedals.setup();
 }
