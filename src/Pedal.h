@@ -7,6 +7,7 @@
 
 #include <HX711.h>
 
+#include <Smoothed.h>
 
 // init util library
 UtilLib utilLib;
