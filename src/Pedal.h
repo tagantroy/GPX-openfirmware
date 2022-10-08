@@ -48,7 +48,6 @@ class Pedal
       long rawValue = 0;
       rawValue = _loadCell.get_value(1);
       if (rawValue > _loadcell_max_val) {
-//            rawValue = 0;
         rawValue = (_loadcell_max_val - 1);
       }
       if (rawValue < 0) rawValue = 0;
@@ -164,18 +163,12 @@ class Pedal
 
       if (_smooth == 1) {
         if(_prefix == "B:") {
-//          BrakeFilter.Filter(rawValue);
-//          rawValue = (long)BrakeFilter.Current();
           rawValue =  _brakeFilter.process(rawValue);
         }
         if(_prefix == "T:") {
-//          ThrottleFilter.Filter(rawValue);
-//          rawValue = (long)ThrottleFilter.Current();
           rawValue =  _throttleFilter.process(rawValue);
         }
         if(_prefix == "C:") {
-//          ClutchFilter.Filter(rawValue);
-//          rawValue = (long)ClutchFilter.Current();
           rawValue =  _clutchFilter.process(rawValue);
         }
     

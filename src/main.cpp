@@ -14,24 +14,23 @@ int CLUTCH_SCK = 5;
 int CLUTCH_DATA = 4;
 
 void setup() {
-  // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
+
   pedals.setThrottleOn(true);
-  pedals.setThrottleBits("16bit", "16bit");
+  pedals.setThrottleBits("17bit", "15bit");
   pedals.setThrottleLoadcell(THROTTLE_DATA, THROTTLE_SCK);
 
   pedals.setBrakeOn(true);
-  pedals.setBrakeBits("16bit", "16bit");
+  pedals.setBrakeBits("17bit", "15bit");
   pedals.setBrakeLoadcell(BRAKE_DATA, BRAKE_SCK);
 
   pedals.setClutchOn(true);
-  pedals.setClutchBits("16bit", "16bit");
+  pedals.setClutchBits("17bit", "15bit");
   pedals.setClutchLoadcell(CLUTCH_DATA, CLUTCH_SCK);
 
   pedals.setup();
 }
 
 void loop() {
-  delay(500);
   pedals.loop();
 }
