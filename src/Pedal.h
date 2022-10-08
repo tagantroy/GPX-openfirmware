@@ -40,7 +40,7 @@ class Pedal
 
     void readValues() {
       long rawValue = 0;
-      rawValue = _loadCell.get_value(1);
+      rawValue = _loadCell.get_value(1) / 256;
       if (rawValue > _loadcell_max_val) {
         rawValue = (_loadcell_max_val - 1);
       }
@@ -51,7 +51,7 @@ class Pedal
 
     void enableSmoothing(int smoothingValue) {
       _smooth = smoothingValue;
-      pedalFilter.begin(SMOOTHED_EXPONENTIAL, _smooth);
+      pedalFilter.begin(SMOOTHED_AVERAGE, 5);
     }
 
     int getSmoothValues() {
