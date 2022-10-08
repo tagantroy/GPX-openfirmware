@@ -388,9 +388,9 @@ class Pedals {
       if (msg.indexOf("SMOOTH:") >= 0) {
         String splitSMOOTH = utilLib.getValue(msg, ',', 0);
         splitSMOOTH.replace("SMOOTH:", "");
-        _throttle.setSmoothValues(utilLib.getValue(splitSMOOTH, '-', 0).toInt());
-        _brake.setSmoothValues(utilLib.getValue(splitSMOOTH, '-', 1).toInt());
-        _clutch.setSmoothValues(utilLib.getValue(splitSMOOTH, '-', 2).toInt());
+        _throttle.enableSmoothing(utilLib.getValue(splitSMOOTH, '-', 0).toInt());
+        _brake.enableSmoothing(utilLib.getValue(splitSMOOTH, '-', 1).toInt());
+        _clutch.enableSmoothing(utilLib.getValue(splitSMOOTH, '-', 2).toInt());
 
         utilLib.writeStringToEEPROM(E_PEDAL_SMOOTH_MAP, splitSMOOTH);
       }

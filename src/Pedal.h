@@ -3,19 +3,12 @@
 
 #include "UtilLibrary.h"
 
-#include "Filters.h"
-
 #include <HX711.h>
 
 #include <Smoothed.h>
 
 // init util library
 UtilLib utilLib;
-
-Biquad _brakeFilter = Biquad(BiquadType::lowpass, 0.2, 0.5, 0.0);
-Biquad _clutchFilter = Biquad(BiquadType::lowpass, 0.2, 0.5, 0.0);
-Biquad _throttleFilter = Biquad(BiquadType::lowpass, 0.2, 0.5, 0.0);
-
 
 class Pedal
 {
@@ -56,8 +49,9 @@ class Pedal
       updatePedal(rawValue);
     }
 
-    void setSmoothValues(int smoothValues) {
-      _smooth = smoothValues;
+    void enableSmoothing(int smoothingValue) {
+      _smooth = smoothingValue;
+      pedalFilter.begin(SMOOTHED_EXPONENTIAL, _smooth);
     }
 
     int getSmoothValues() {
@@ -139,9 +133,9 @@ class Pedal
     long _afterHID;
 
     // Create a new exponential filter with a weight of 10 and initial value of 0. 
-    //ExponentialFilter<long> pedalFilter(20, 0);
     
     HX711 _loadCell;
+    Smoothed<long> pedalFilter;
     int _loadcell_gain = 128;
     int _loadcell_tare_reps = 10;
     long _loadcell_max_val = 16777215; //24bit
@@ -162,17 +156,9 @@ class Pedal
 
       ////////////////////////////////////////////////////////////////////////////////
 
-      if (_smooth == 1) {
-        if(_prefix == "B:") {
-          rawValue =  _brakeFilter.process(rawValue);
-        }
-        if(_prefix == "T:") {
-          rawValue =  _throttleFilter.process(rawValue);
-        }
-        if(_prefix == "C:") {
-          rawValue =  _clutchFilter.process(rawValue);
-        }
-    
+      if(_smooth > 0){
+        pedalFilter.add(rawValue);
+        rawValue = pedalFilter.get();
       }
 
       if (_inverted == 1) {
