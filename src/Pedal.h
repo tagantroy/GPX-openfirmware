@@ -40,7 +40,7 @@ class Pedal
 
     void readValues() {
       long rawValue = 0;
-      rawValue = _loadCell.get_value(1) / 256;
+      rawValue = _loadCell.get_value(1);
       if (rawValue > _loadcell_max_val) {
         rawValue = (_loadcell_max_val - 1);
       }
@@ -136,10 +136,9 @@ class Pedal
     
     HX711 _loadCell;
     Smoothed<long> pedalFilter;
-    int _loadcell_gain = 128;
+    int _loadcell_gain = 128; //Medium = 64, High = 128;
     int _loadcell_tare_reps = 10;
     long _loadcell_max_val = 16777215; //24bit
-    int _loadcell_sensitivity = 64; //Medium = 64, High = 128;
 
     int _inverted = 0; //0 = false / 1 - true
     int _smooth = 0; //0 = false / 1 - true

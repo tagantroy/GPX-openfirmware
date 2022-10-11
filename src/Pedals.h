@@ -153,7 +153,7 @@ class Pedals {
       _throttle_on = on;
     }
 
-    void setThrottleBits(String rawBit, String hidBit) {
+    void setThrottleBits(int rawBit, int hidBit) {
       _throttle_raw_bit = getBit(rawBit);
       _throttle_hid_bit = getBit(hidBit);
     }
@@ -167,7 +167,7 @@ class Pedals {
       _brake_on = on;
     }
 
-    void setBrakeBits(String rawBit, String hidBit) {
+    void setBrakeBits(int rawBit, int hidBit) {
       _brake_raw_bit = getBit(rawBit);
       _brake_hid_bit = getBit(hidBit);
     }
@@ -181,7 +181,7 @@ class Pedals {
       _clutch_on = on;
     }
 
-    void setClutchBits(String rawBit, String hidBit) {
+    void setClutchBits(int rawBit, int hidBit) {
       _clutch_raw_bit = getBit(rawBit);
       _clutch_hid_bit = getBit(hidBit);
     }
@@ -206,59 +206,27 @@ class Pedals {
     long _clutch_raw_bit = 65535; // default 16bit
     long _clutch_hid_bit = 65535; // default 16bit
 
-    long getBit(String bits) {
-      if (bits == "8bit") {
-        return 255;
+    int ipow(int base, int exp)
+    {
+      int result = 1;
+      for (;;)
+      {
+        if (exp & 1)
+          result *= base;
+          exp >>= 1;
+          if (!exp) {
+            break;
+          }
+          base *= base;
       }
-      if (bits == "9bit") {
-        return 511;
-      }
-      if (bits == "10bit") {
-        return 1023 ;
-      }
-      if (bits == "11bit") {
-        return 2047 ;
-      }
-      if (bits == "12bit") {
-        return 4095 ;
-      }
-      if (bits == "13bit") {
-        return 8191 ;
-      }
-      if (bits == "14bit") {
-        return 16383 ;
-      }
-      if (bits == "15bit") {
-        return 32767;
-      }
-      if (bits == "16bit") {
+      return result;
+    }
+
+    long getBit(int bits) {
+      if(bits < 8 || bits > 24) {
         return 65535;
       }
-      if (bits == "17bit") {
-        return 131071;
-      }
-      if (bits == "18bit") {
-        return 262143;
-      }
-      if (bits == "19bit") {
-        return 524287;
-      }
-      if (bits == "20bit") {
-        return 1048575;
-      }
-      if (bits == "21bit") {
-        return 2097151;
-      }
-      if (bits == "22bit") {
-        return 4194303;
-      }
-      if (bits == "23bit") {
-        return 8388607;
-      }
-      if (bits == "24bit") {
-        return 16777215;
-      }
-      return 65535;
+      return ipow(2, bits) - 1;
     }
 
     /////////////////////////////////////////////
