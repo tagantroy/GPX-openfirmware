@@ -23,9 +23,9 @@ class Pedal
       _hid_bit = hidBit;
     }
 
-    void ConfigLoadCell (int DOUT, int CLK)
+    void ConfigLoadCell (int DOUT, int CLK, int GAIN)
     {
-      _loadCell.begin(DOUT, CLK, _loadcell_gain);
+      _loadCell.begin(DOUT, CLK, GAIN);
       _loadCell.set_scale(-7050.0);  // -7050.0 This value is obtained using the SparkFun_HX711_Calibration sketch
       _loadCell.tare(_loadcell_tare_reps); // Reset values to zero
     }
@@ -49,21 +49,21 @@ class Pedal
       updatePedal(rawValue);
     }
 
-    void enableSmoothing(int smoothingValue) {
-      _smooth = smoothingValue;
+    void enableSmoothing(bool enable) {
+      smooth = enable;
       pedalFilter.begin(SMOOTHED_AVERAGE, 5);
     }
 
-    int getSmoothValues() {
-      return _smooth;
+    bool getSmoothValues() {
+      return smooth;
     }
 
-    void setInvertedValues(int invertedValues) {
-      _inverted = invertedValues;
+    void setInverted(bool enable) {
+      inverted = enable;
     }
 
-    int getInvertedValues() {
-      return _inverted;
+    bool getInvertedValues() {
+      return inverted;
     }
 
     ////////////////////
@@ -136,12 +136,11 @@ class Pedal
     
     HX711 _loadCell;
     Smoothed<long> pedalFilter;
-    int _loadcell_gain = 128; //Medium = 64, High = 128;
     int _loadcell_tare_reps = 10;
     long _loadcell_max_val = 16777215; //24bit
 
-    int _inverted = 0; //0 = false / 1 - true
-    int _smooth = 0; //0 = false / 1 - true
+    bool inverted = false;
+    bool smooth = false;
     long _inputMap[6] =  { 0, 20, 40, 60, 80, 100 };
     long _outputMap[6] = { 0, 20, 40, 60, 80, 100 };
     long _calibration[4] = {0, _raw_bit, 0, _raw_bit}; // calibration low, calibration high, deadzone low, deadzone high
@@ -155,12 +154,12 @@ class Pedal
 
       ////////////////////////////////////////////////////////////////////////////////
 
-      if(_smooth > 0){
+      if(smooth){
         pedalFilter.add(rawValue);
         rawValue = pedalFilter.get();
       }
 
-      if (_inverted == 1) {
+      if (inverted) {
         rawValue = _raw_bit - rawValue;
       }
 

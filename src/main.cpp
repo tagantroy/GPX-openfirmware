@@ -11,15 +11,15 @@ void setup() {
 
   pedals.setThrottleOn(true);
   pedals.setThrottleBits(24, 15);
-  pedals.setThrottleLoadcell(THROTTLE_DATA, THROTTLE_SCK);
+  pedals.setThrottleLoadcell(THROTTLE_DATA, THROTTLE_SCK, THROTTLE_GAIN);
 
   pedals.setBrakeOn(true);
   pedals.setBrakeBits(24, 15);
-  pedals.setBrakeLoadcell(BRAKE_DATA, BRAKE_SCK);
+  pedals.setBrakeLoadcell(BRAKE_DATA, BRAKE_SCK, BRAKE_GAIN);
 
   pedals.setClutchOn(true);
   pedals.setClutchBits(24, 15);
-  pedals.setClutchLoadcell(CLUTCH_DATA, CLUTCH_SCK);
+  pedals.setClutchLoadcell(CLUTCH_DATA, CLUTCH_SCK, CLUTCH_GAIN);
 
   pedals.setup();
 }

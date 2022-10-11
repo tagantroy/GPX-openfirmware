@@ -158,8 +158,8 @@ class Pedals {
       _throttle_hid_bit = getBit(hidBit);
     }
 
-    void setThrottleLoadcell(int DOUT, int CLK) {
-      _throttle.ConfigLoadCell(DOUT, CLK);
+    void setThrottleLoadcell(int dout, int clk, int gain) {
+      _throttle.ConfigLoadCell(dout, clk, gain);
     }
 
     ///////////////////////// brake /////////////////////////
@@ -172,8 +172,8 @@ class Pedals {
       _brake_hid_bit = getBit(hidBit);
     }
 
-    void setBrakeLoadcell(int DOUT, int CLK) {
-      _brake.ConfigLoadCell(DOUT, CLK);
+    void setBrakeLoadcell(int dout, int clk, int gain) {
+      _brake.ConfigLoadCell(dout, clk, gain);
     }
 
     ///////////////////////// clutch /////////////////////////
@@ -186,8 +186,8 @@ class Pedals {
       _clutch_hid_bit = getBit(hidBit);
     }
 
-    void setClutchLoadcell(int DOUT, int CLK) {
-      _clutch.ConfigLoadCell(DOUT, CLK);
+    void setClutchLoadcell(int dout, int clk, int gain){
+      _clutch.ConfigLoadCell(dout, clk, gain);
     }
 
   private:
@@ -368,9 +368,9 @@ class Pedals {
       if (msg.indexOf("INVER:") >= 0) {
         String splitINVER = utilLib.getValue(msg, ',', 0);
         splitINVER.replace("INVER:", "");
-        _throttle.setInvertedValues(utilLib.getValue(splitINVER, '-', 0).toInt());
-        _brake.setInvertedValues(utilLib.getValue(splitINVER, '-', 1).toInt());
-        _clutch.setInvertedValues(utilLib.getValue(splitINVER, '-', 2).toInt());
+        _throttle.setInverted(utilLib.getValue(splitINVER, '-', 0).toInt() == 1);
+        _brake.setInverted(utilLib.getValue(splitINVER, '-', 1).toInt() == 1);
+        _clutch.setInverted(utilLib.getValue(splitINVER, '-', 2).toInt() == 1);
 
         utilLib.writeStringToEEPROM(E_PEDAL_INVERTED_MAP, splitINVER);
       }
