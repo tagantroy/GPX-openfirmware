@@ -24,5 +24,9 @@ void setup() {
 }
 
 void loop() {
+  unsigned long start = micros();
   pedals.loop();
+  unsigned long end = micros();
+  unsigned long delta = end - start;
+  Serial.println(delta);
 }
