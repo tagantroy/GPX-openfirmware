@@ -2,7 +2,6 @@
 
 #include "Pedals.h"
 #include "config.h"
-#include "settings_storage.h"
 
 Pedals pedals;
 
