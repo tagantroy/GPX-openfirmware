@@ -175,16 +175,17 @@ class Pedal
         pedalOutput = rawValue;
       }
 
-      long inputMapHID[6] = {};
-      utilLib.copyArray(_inputMap, inputMapHID, 6);
-      utilLib.arrayMapMultiplier(inputMapHID, (_hid_bit / 100));
+      // long inputMapHID[6] = {};
+      // utilLib.copyArray(_inputMap, inputMapHID, 6);
+      // utilLib.arrayMapMultiplier(inputMapHID, (_hid_bit / 1000));
 
-      long outputMapHID[6] = {};
-      utilLib.copyArray(_outputMap, outputMapHID, 6);
-      utilLib.arrayMapMultiplier(outputMapHID, (_hid_bit / 100));
+      // long outputMapHID[6] = {};
+      // utilLib.copyArray(_outputMap, outputMapHID, 6);
+      // utilLib.arrayMapMultiplier(outputMapHID, (_hid_bit / 100));
 
-      beforeHID = utilLib.scaleMap(pedalOutput, lowDeadzone, topDeadzone, 0, _hid_bit);
-      afterHID = utilLib.scaleMultiMap(beforeHID, inputMapHID, outputMapHID, 6);
+      // beforeHID = utilLib.scaleMap(pedalOutput, lowDeadzone, topDeadzone, 0, _hid_bit);
+      // afterHID = utilLib.scaleMultiMap(beforeHID, inputMapHID, outputMapHID, 6);
+      afterHID = (float(rawValue)/_calibration[1])*_hid_bit;
 
       beforeSerial = utilLib.scaleMap(pedalOutput, lowDeadzone, topDeadzone, 0, _serial_range);
       afterSerial = utilLib.scaleMultiMap(beforeSerial, _inputMap, _outputMap, 6);
@@ -198,7 +199,12 @@ class Pedal
       String pedalString = stringPrefix + stringValues;
 
       _pedalString = pedalString;
-      _afterHID = afterHID;
+      if(afterHID < _hid_bit){
+        _afterHID = afterHID;
+      } else {
+        _afterHID = _hid_bit;
+      }
+      
     }
 
 };
