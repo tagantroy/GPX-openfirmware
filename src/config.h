@@ -1,17 +1,8 @@
-#ifndef Config_h
-#define Config_h
-int HIGH_LC_GAIN = 128;
-int MEDIUM_LC_GAIN = 64;
-
-int THROTTLE_SCK = 4;
-int THROTTLE_DATA = 5;
-int THROTTLE_GAIN = HIGH_LC_GAIN;
-
-int BRAKE_SCK = 6;
-int BRAKE_DATA = 7;
-int BRAKE_GAIN = HIGH_LC_GAIN;
-
-int CLUTCH_SCK = 8;
-int CLUTCH_DATA = 9;
-int CLUTCH_GAIN = HIGH_LC_GAIN;
-#endif
+int VERSION_CODE = 1;
+char VERSION_NAME[] = "0.0.1";
+char MANUFACTURER[] = "OpenSimRacing";
+char PRODUCT[] = "GPX Pedals";
+char DEVICE_SERIAL[] = "1234";
+int DEVICE_REVISION = 1;
+int DEVICE_VID = 1234;
+int DEVICE_PID = 1234;
