@@ -1,6 +1,5 @@
 
 #include "Pedals.h"
-#include "config.h"
 
 #include "HID-Project.h"
 
